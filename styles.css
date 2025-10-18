@@ -124,22 +124,9 @@ body {
   font-size: clamp(24px, 4vw, 32px);
   text-align: center;
   position: relative;
-  background: linear-gradient(
-    90deg,
-    #ffffff 0%,
-    #ffffff 30%,
-    #ffd700 50%,
-    #ffffff 70%,
-    #ffffff 100%
-  );
-  background-size: 300% 100%;
-  background-position: 0% center;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  animation: shine-sweep 3s ease-in-out infinite;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  animation: shine-sweep 7s ease-in-out infinite;
 }
 
 /* Podium container - 2nd, 1st, 3rd order */
@@ -325,17 +312,17 @@ body {
 }
 
 @keyframes shine-sweep {
-  0% {
-    background-position: -100% center;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  0%, 100% {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    opacity: 1;
   }
   50% {
-    background-position: 200% center;
-    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
-  }
-  100% {
-    background-position: -100% center;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 0.9),
+      0 0 40px rgba(255, 255, 255, 0.6),
+      0 0 60px rgba(255, 255, 255, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.3);
+    opacity: 1;
   }
 }
 
