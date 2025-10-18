@@ -124,9 +124,21 @@ body {
   font-size: clamp(24px, 4vw, 32px);
   text-align: center;
   position: relative;
-  color: #ffffff;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 40%,
+    #00ffff 50%,
+    #ffffff 60%,
+    #ffffff 100%
+  );
+  background-size: 200% 100%;
+  background-position: -100% center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   animation: shine-sweep 10s ease-in-out infinite;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
 /* Podium container - 2nd, 1st, 3rd order */
@@ -312,18 +324,17 @@ body {
 }
 
 @keyframes shine-sweep {
-  0%, 100% {
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    color: #ffffff;
+  0% {
+    background-position: -100% center;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   }
-  50% {
-    text-shadow:
-      0 0 20px rgba(0, 255, 255, 1),
-      0 0 40px rgba(0, 255, 255, 0.8),
-      0 0 60px rgba(0, 255, 255, 0.5),
-      0 0 80px rgba(0, 200, 255, 0.3),
-      0 2px 8px rgba(0, 0, 0, 0.3);
-    color: #00ffff;
+  5% {
+    background-position: 200% center;
+    filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.8)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  }
+  100% {
+    background-position: 200% center;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   }
 }
 
