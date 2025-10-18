@@ -183,9 +183,10 @@
       const ranks = ['gold', 'silver', 'bronze'];
       names.slice(0,3).forEach((name, idx) => {
         const card = document.createElement('div'); card.className = 'prize';
+        card.style.position = 'relative';
         const medal = document.createElement('div'); medal.className = `medal ${ranks[idx] || 'gold'}`; medal.setAttribute('aria-label', `${idx+1}位`); medal.innerHTML = medalSvg;
         const body = document.createElement('div'); body.className = 'prize__body';
-        const p = document.createElement('p'); p.innerHTML = `<span class="rank-label">${idx+1}位</span><span class="rank-name"> ${name||''}</span>`;
+        const p = document.createElement('p'); p.innerHTML = `<span class="rank-label">${idx+1}</span><span class="rank-name">${name||''}</span>`;
         body.appendChild(p);
         card.appendChild(medal); card.appendChild(body); wrap.appendChild(card);
       });
