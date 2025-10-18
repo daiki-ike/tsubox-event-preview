@@ -123,9 +123,23 @@ body {
   margin-bottom: 24px;
   font-size: clamp(24px, 4vw, 32px);
   text-align: center;
-  color: #ffffff;
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    #ffffff 0%,
+    #ffffff 30%,
+    #ffd700 50%,
+    #ffffff 70%,
+    #ffffff 100%
+  );
+  background-size: 300% 100%;
+  background-position: 0% center;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  animation: sparkle 3s ease-in-out infinite;
+  animation: shine-sweep 3s ease-in-out infinite;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
 /* Podium container - 2nd, 1st, 3rd order */
@@ -307,6 +321,21 @@ body {
       0 0 20px rgba(255, 215, 0, 0.6),
       0 0 30px rgba(255, 215, 0, 0.4),
       0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@keyframes shine-sweep {
+  0% {
+    background-position: -100% center;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  }
+  50% {
+    background-position: 200% center;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+  }
+  100% {
+    background-position: -100% center;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   }
 }
 
