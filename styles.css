@@ -180,3 +180,30 @@ body {
 }
 /* Enable custom horizontal swipe while keeping vertical scroll */
 #cm .video-grid { touch-action: pan-y; }
+
+/* ===== Link Card ===== */
+.link-card {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+  overflow: hidden;
+  text-decoration: none;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
+  margin: 32px auto 24px;
+  transition: transform .15s ease, background .15s ease;
+}
+.link-card span {
+  display: block;
+  padding: 16px 18px;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--text);
+  text-align: center;
+}
+.link-card:hover {
+  transform: translateY(-2px);
+  background: rgba(255,255,255,0.12);
+}
