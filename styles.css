@@ -328,7 +328,7 @@ body {
     background-position: -100% center;
     filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   }
-  5% {
+  15% {
     background-position: 200% center;
     filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.8)) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
   }
