@@ -126,7 +126,7 @@ body {
   position: relative;
   color: #ffffff;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  animation: shine-sweep 7s ease-in-out infinite;
+  animation: shine-sweep 10s ease-in-out infinite;
 }
 
 /* Podium container - 2nd, 1st, 3rd order */
