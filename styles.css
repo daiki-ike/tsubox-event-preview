@@ -221,7 +221,7 @@ body {
 }
 
 #top3 .prize:nth-child(3)::after {
-  height: 100px;
+  height: 130px;
   background: linear-gradient(180deg, rgba(205,127,50,0.25), rgba(205,127,50,0.08));
   border-color: rgba(205,127,50,0.4);
   box-shadow: 0 8px 24px rgba(205,127,50,0.25), inset 0 2px 8px rgba(255,255,255,0.1);
@@ -296,7 +296,7 @@ body {
 }
 
 #top3 .prize:nth-child(3) .prize__body {
-  top: 142px;
+  top: 157px;
   transform: translateY(-50%);
 }
 
