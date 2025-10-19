@@ -290,12 +290,12 @@ body {
 
 /* Position adjustments for 2nd and 3rd place text */
 #top3 .prize:nth-child(2) .prize__body {
-  top: 80px;
+  top: 40px;
   transform: none;
 }
 
 #top3 .prize:nth-child(3) .prize__body {
-  top: 60px;
+  top: 20px;
   transform: none;
 }
 
