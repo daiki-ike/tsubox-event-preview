@@ -409,9 +409,9 @@ body {
   }
 
   .link-card span {
-    font-size: 0.85rem;
-    padding: 14px 16px;
-    gap: 6px;
+    font-size: 0.7rem;
+    padding: 14px 12px;
+    gap: 4px;
     white-space: nowrap;
   }
 }
