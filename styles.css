@@ -207,21 +207,21 @@ body {
 
 /* Different heights for each podium */
 #top3 .prize:nth-child(1)::after {
-  height: 180px;
+  height: 220px;
   background: linear-gradient(180deg, rgba(255,215,0,0.25), rgba(255,215,0,0.08));
   border-color: rgba(255,215,0,0.4);
   box-shadow: 0 8px 32px rgba(255,215,0,0.3), inset 0 2px 8px rgba(255,255,255,0.2);
 }
 
 #top3 .prize:nth-child(2)::after {
-  height: 140px;
+  height: 180px;
   background: linear-gradient(180deg, rgba(192,192,192,0.25), rgba(192,192,192,0.08));
   border-color: rgba(192,192,192,0.4);
   box-shadow: 0 8px 28px rgba(192,192,192,0.25), inset 0 2px 8px rgba(255,255,255,0.15);
 }
 
 #top3 .prize:nth-child(3)::after {
-  height: 110px;
+  height: 140px;
   background: linear-gradient(180deg, rgba(205,127,50,0.25), rgba(205,127,50,0.08));
   border-color: rgba(205,127,50,0.4);
   box-shadow: 0 8px 24px rgba(205,127,50,0.25), inset 0 2px 8px rgba(255,255,255,0.1);
@@ -243,7 +243,7 @@ body {
 #top3 .prize__body p {
   color: #fff;
   font-weight: 800;
-  font-size: 2rem;
+  font-size: 3rem;
   margin: 0;
   text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   line-height: 1.4;
