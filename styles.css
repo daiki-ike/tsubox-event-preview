@@ -406,8 +406,9 @@ body {
   /* Fix link card text wrapping */
   .link-card span {
     font-size: 1rem;
-    padding: 14px 12px;
+    padding: 14px 20px;
     white-space: nowrap;
+    overflow-x: auto;
   }
 }
 
