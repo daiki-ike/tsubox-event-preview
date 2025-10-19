@@ -402,18 +402,6 @@ body {
   #top3 .prize:nth-child(3) .prize__body {
     top: 110px;
   }
-
-  /* Fix link card text wrapping */
-  .link-card {
-    margin: 24px 16px;
-  }
-
-  .link-card span {
-    font-size: 0.7rem;
-    padding: 14px 12px;
-    gap: 4px;
-    white-space: nowrap;
-  }
 }
 
 /* Notice (disclaimer) */
@@ -513,4 +501,18 @@ body {
 }
 .link-card:hover .like-icon {
   color: #000000;
+}
+
+/* Mobile link card override - must be after desktop styles */
+@media (max-width: 640px) {
+  .link-card {
+    margin: 24px 16px;
+  }
+
+  .link-card span {
+    font-size: 0.7rem !important;
+    padding: 14px 12px !important;
+    gap: 4px !important;
+    white-space: nowrap;
+  }
 }
