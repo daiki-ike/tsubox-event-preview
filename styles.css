@@ -288,18 +288,7 @@ body {
   color: #fff;
 }
 
-/* Position adjustments for 2nd and 3rd place text */
-#top3 .prize:nth-child(2) .prize__body {
-  top: auto;
-  bottom: 80px;
-  transform: none;
-}
-
-#top3 .prize:nth-child(3) .prize__body {
-  top: auto;
-  bottom: 60px;
-  transform: none;
-}
+/* Position adjustments for 2nd and 3rd place text - keep centered like 1st place */
 
 /* Animations */
 @keyframes float {
