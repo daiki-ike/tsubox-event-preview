@@ -243,10 +243,10 @@ body {
 #top3 .prize__body p {
   color: #fff;
   font-weight: 800;
-  font-size: 3rem;
+  font-size: 4rem;
   margin: 0;
   text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-  line-height: 1.4;
+  line-height: 1.2;
 }
 
 #top3 .rank-label {
