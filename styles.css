@@ -230,7 +230,10 @@ body {
 /* Name and rank on top of podium */
 #top3 .prize__body {
   position: absolute;
-  bottom: 0;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
   width: 100%;
   padding: 16px 8px;
   text-align: center;
@@ -240,7 +243,7 @@ body {
 #top3 .prize__body p {
   color: #fff;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 0;
   text-shadow: 0 2px 8px rgba(0,0,0,0.6);
   line-height: 1.4;
@@ -248,9 +251,9 @@ body {
 
 #top3 .rank-label {
   display: block;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 900;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   text-shadow: 0 4px 12px rgba(0,0,0,0.8);
 }
 
@@ -458,6 +461,7 @@ body {
   font-size: 1.25rem;
   color: var(--text);
   text-align: center;
+  filter: grayscale(100%);
 }
 .like-icon {
   width: 24px;
