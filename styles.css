@@ -288,7 +288,17 @@ body {
   color: #fff;
 }
 
-/* Position adjustments for 2nd and 3rd place text - keep centered like 1st place */
+/* Position adjustments for 2nd and 3rd place text */
+/* Calculate: medal height (80px + 12px margin) + podium center */
+#top3 .prize:nth-child(2) .prize__body {
+  top: 167px;
+  transform: translateY(-50%);
+}
+
+#top3 .prize:nth-child(3) .prize__body {
+  top: 142px;
+  transform: translateY(-50%);
+}
 
 /* Animations */
 @keyframes float {
