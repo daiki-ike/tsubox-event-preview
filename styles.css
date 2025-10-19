@@ -383,7 +383,7 @@ body {
 @media (max-width: 640px) {
   #top3 .prizes { gap: 8px; }
   #top3 .prize { min-width: 100px; max-width: 140px; }
-  #top3 .medal { width: 60px; height: 60px; }
+  #top3 .medal { width: 60px; height: 60px; margin-bottom: 8px; }
   #top3 .medal__icon { width: 30px; height: 30px; }
   #top3 .prize:nth-child(1)::after { height: 140px; }
   #top3 .prize:nth-child(2)::after { height: 110px; }
@@ -391,6 +391,22 @@ body {
   #top3 .rank-label { font-size: 2rem; }
   #top3 .rank-name { font-size: 0.9rem; }
   #top3 .prize__body { padding: 12px 6px; }
+
+  /* Adjust text position for mobile - medal height (60px + 8px margin) + podium center */
+  #top3 .prize:nth-child(2) .prize__body {
+    top: 123px;
+  }
+
+  #top3 .prize:nth-child(3) .prize__body {
+    top: 110px;
+  }
+
+  /* Fix link card text wrapping */
+  .link-card span {
+    font-size: 1rem;
+    padding: 14px 12px;
+    white-space: nowrap;
+  }
 }
 
 /* Notice (disclaimer) */
