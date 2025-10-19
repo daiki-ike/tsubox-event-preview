@@ -506,7 +506,8 @@ body {
 /* Mobile link card override - must be after desktop styles */
 @media (max-width: 640px) {
   .link-card {
-    margin: 24px 16px;
+    margin: 24px auto;
+    width: calc(100% - 32px);
   }
 
   .link-card span {
