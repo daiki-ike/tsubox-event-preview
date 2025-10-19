@@ -263,6 +263,7 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 12px rgba(255,215,0,0.8));
+  margin-top: 16px;
 }
 
 #top3 .prize:nth-child(2) .rank-label {
@@ -279,6 +280,7 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 8px rgba(205,127,50,0.6));
+  margin-top: 16px;
 }
 
 #top3 .rank-name {
