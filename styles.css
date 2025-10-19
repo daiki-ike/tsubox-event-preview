@@ -405,13 +405,14 @@ body {
 
   /* Fix link card text wrapping */
   .link-card {
-    margin: 24px 12px;
+    margin: 24px 16px;
   }
 
   .link-card span {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     padding: 14px 16px;
     gap: 6px;
+    white-space: nowrap;
   }
 }
 
