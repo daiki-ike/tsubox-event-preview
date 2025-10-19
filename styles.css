@@ -230,9 +230,10 @@ body {
 /* Name and rank on top of podium */
 #top3 .prize__body {
   position: absolute;
-  top: 20px;
+  top: 50%;
   left: 0;
   right: 0;
+  transform: translateY(-50%);
   width: 100%;
   padding: 8px;
   text-align: center;
