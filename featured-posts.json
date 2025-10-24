@@ -1,0 +1,28 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "name": "hata",
+      "thumbnail": "assetspost-thumb-1.jpg",
+      "url": "https://www.facebook.com/groups/342734216486824"
+    },
+    {
+      "id": "2",
+      "name": "nobu",
+      "thumbnail": "assetspost-thumb-2.jpg",
+      "url": "https://www.facebook.com/groups/342734216486824"
+    },
+    {
+      "id": "3",
+      "name": "taru",
+      "thumbnail": "assetspost-thumb-3.jpg",
+      "url": "https://www.facebook.com/groups/342734216486824"
+    },
+    {
+      "id": "4",
+      "name": "sai",
+      "thumbnail": "assetspost-thumb-4.jpg",
+      "url": "https://www.facebook.com/groups/342734216486824"
+    }
+  ]
+}
