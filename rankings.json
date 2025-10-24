@@ -1,0 +1,54 @@
+{
+  "2025-10-24": [
+    {
+      "rank": 1,
+      "name": "かわ",
+      "prevRank": 1
+    },
+    {
+      "rank": 2,
+      "name": "さい",
+      "prevRank": 3
+    },
+    {
+      "rank": 3,
+      "name": "せわ",
+      "prevRank": 2
+    },
+    {
+      "rank": 4,
+      "name": "tama",
+      "prevRank": 4
+    },
+    {
+      "rank": 5,
+      "name": "take",
+      "prevRank": null
+    },
+    {
+      "rank": 6,
+      "name": "nomu",
+      "prevRank": null
+    },
+    {
+      "rank": 7,
+      "name": "saito",
+      "prevRank": null
+    },
+    {
+      "rank": 8,
+      "name": "hata",
+      "prevRank": 9
+    },
+    {
+      "rank": 9,
+      "name": "taru",
+      "prevRank": null
+    },
+    {
+      "rank": 10,
+      "name": "ahru",
+      "prevRank": null
+    }
+  ]
+}
