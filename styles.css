@@ -606,15 +606,18 @@ body {
   margin-top: 4px;
 }
 
-/* ===== Featured Posts Gallery ===== */
-.posts-grid {
+/* ===== Daily Top3 Posts ===== */
+.daily-posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   margin-top: 24px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.post-card {
+.daily-post-card {
   background: rgba(255,255,255,0.06);
   border: 1px solid var(--border);
   border-radius: 16px;
@@ -626,32 +629,42 @@ body {
   display: block;
 }
 
-.post-card:hover {
+.daily-post-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(34, 193, 241, 0.3);
 }
 
-.post-thumbnail {
+.daily-post-thumbnail {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
   display: block;
 }
 
-.post-info {
+.daily-post-info {
   padding: 14px 16px;
   text-align: center;
 }
 
-.post-name {
+.daily-post-name {
   font-size: 1rem;
   font-weight: 600;
   color: var(--text);
-  margin: 0;
+  margin: 0 0 6px 0;
 }
 
-@media (max-width: 640px) {
-  .posts-grid {
+.daily-post-likes {
+  font-size: 1.1rem;
+  color: var(--primary);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+@media (max-width: 768px) {
+  .daily-posts-grid {
     grid-template-columns: 1fr;
   }
 }

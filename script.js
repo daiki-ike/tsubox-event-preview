@@ -288,32 +288,56 @@
     }
   })();
 
-  // Facebook投稿ギャラリー
-  (async function renderFeaturedPosts() {
-    const grid = document.getElementById('posts-grid');
-    const dotsWrap = document.getElementById('posts-dots');
+  // 昨日のトップ3投稿
+  (async function renderDailyTop3Posts() {
+    const grid = document.getElementById('daily-posts-grid');
+    const note = document.getElementById('daily-top3-note');
     if (!grid) return;
 
+    const nowUtc = Date.now();
+    const jst = new Date(nowUtc + 9 * 60 * 60 * 1000);
+    const yst = new Date(jst.getTime() - 24 * 60 * 60 * 1000);
+    const key = `${yst.getUTCFullYear()}-${String(yst.getUTCMonth()+1).padStart(2,'0')}-${String(yst.getUTCDate()).padStart(2,'0')}`;
+
     try {
-      const res = await fetch('featured-posts.json', { cache: 'no-store' });
-      if (!res.ok) throw new Error('featured-posts.json not found');
+      const res = await fetch('daily-top3.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('daily-top3.json not found');
       const data = await res.json();
-      const posts = data.posts || [];
+      let posts = [];
 
-      if (posts.length === 0) return;
+      // 今日のデータを取得、なければ最新のデータを使用
+      if (Array.isArray(data[key])) {
+        posts = data[key];
+      } else {
+        const keys = Object.keys(data || {}).sort();
+        const last = keys[keys.length - 1];
+        if (last && Array.isArray(data[last])) {
+          posts = data[last];
+          note && (note.textContent = `集計日: ${last.replaceAll('-', '/')}`);
+        }
+      }
 
-      // 投稿カードを生成
+      if (posts.length === 0) {
+        note && (note.textContent = '昨日のトップ3投稿データがありません');
+        return;
+      } else if (!note.textContent) {
+        note && (note.textContent = `集計日: ${key.replaceAll('-', '/')}`);
+      }
+
+      // 投稿カードを生成（固定で3枚）
       grid.innerHTML = '';
-      posts.forEach((post) => {
+      const groupUrl = 'https://www.facebook.com/groups/342734216486824';
+
+      posts.slice(0, 3).forEach((post) => {
         const card = document.createElement('a');
-        card.className = 'post-card';
-        card.href = post.url;
+        card.className = 'daily-post-card';
+        card.href = groupUrl;
         card.target = '_blank';
         card.rel = 'noopener noreferrer';
 
         const img = document.createElement('img');
-        img.className = 'post-thumbnail';
-        img.src = post.thumbnail;
+        img.className = 'daily-post-thumbnail';
+        img.src = post.postImage || 'assets/placeholder.jpg';
         img.alt = `${post.name}の投稿`;
         img.loading = 'lazy';
 
@@ -324,87 +348,25 @@
         };
 
         const info = document.createElement('div');
-        info.className = 'post-info';
+        info.className = 'daily-post-info';
 
         const name = document.createElement('p');
-        name.className = 'post-name';
+        name.className = 'daily-post-name';
         name.textContent = post.name;
 
+        const likes = document.createElement('div');
+        likes.className = 'daily-post-likes';
+        likes.innerHTML = `<span>${post.likes || 0}</span> ♡`;
+
         info.appendChild(name);
+        info.appendChild(likes);
         card.appendChild(img);
         card.appendChild(info);
         grid.appendChild(card);
       });
-
-      // カルーセル機能（既存のCMカルーセルと同じロジック）
-      const perPage = Number(grid.getAttribute('data-per-page') || 3);
-      const intervalMs = Number(grid.getAttribute('data-interval') || 6000);
-      const auto = String(grid.getAttribute('data-auto') || 'true') !== 'false';
-      const items = Array.from(grid.querySelectorAll('.post-card'));
-      let page = 1;
-      let totalPages = Math.max(1, Math.ceil(items.length / perPage));
-      let timer = null;
-
-      function render() {
-        const start = (page - 1) * perPage;
-        const end = start + perPage;
-        items.forEach((el, i) => {
-          el.style.display = (i >= start && i < end) ? '' : 'none';
-        });
-        if (dotsWrap) {
-          const dots = Array.from(dotsWrap.querySelectorAll('.cm-dot'));
-          dots.forEach((d, i) => d.classList.toggle('is-active', i === page - 1));
-        }
-      }
-
-      function buildDots() {
-        if (!dotsWrap || totalPages <= 1) return;
-        dotsWrap.innerHTML = '';
-        for (let i = 1; i <= totalPages; i++) {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'cm-dot';
-          btn.setAttribute('aria-label', `${i}ページ目へ`);
-          btn.addEventListener('click', () => {
-            stopAuto();
-            page = i;
-            render();
-            startAuto();
-          });
-          dotsWrap.appendChild(btn);
-        }
-      }
-
-      function nextPage() {
-        page = page >= totalPages ? 1 : page + 1;
-        render();
-      }
-
-      function startAuto() {
-        if (!auto || timer || totalPages <= 1) return;
-        timer = setInterval(nextPage, intervalMs);
-      }
-
-      function stopAuto() {
-        if (timer) {
-          clearInterval(timer);
-          timer = null;
-        }
-      }
-
-      // ホバーで一時停止
-      [grid, dotsWrap].filter(Boolean).forEach((el) => {
-        el.addEventListener('mouseenter', stopAuto);
-        el.addEventListener('mouseleave', startAuto);
-        el.addEventListener('focusin', stopAuto);
-        el.addEventListener('focusout', startAuto);
-      });
-
-      buildDots();
-      render();
-      startAuto();
     } catch (e) {
-      try { console.error('Featured posts error:', e); } catch {}
+      note && (note.textContent = '昨日のトップ3投稿の読み込みに失敗しました。');
+      try { console.error('Daily top3 posts error:', e); } catch {}
     }
   })();
 })();

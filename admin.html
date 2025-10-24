@@ -72,14 +72,12 @@
           <!-- JavaScriptで動的に生成 -->
         </div>
 
-        <h2>✨ 注目の投稿ギャラリー</h2>
-        <p class="muted">Facebook投稿のスクリーンショット画像と投稿者名、URLを設定できます。画像は assets/ フォルダに配置してください。</p>
+        <h2>📸 昨日のトップ3投稿</h2>
+        <p class="muted">昨日だけのいいね数トップ3を入力します。画像は assets/ フォルダに配置してください。<br>※ 通算ランキングとは別に、1日限定の人気投稿を紹介します。</p>
 
-        <div id="posts-form">
+        <div id="daily-posts-form">
           <!-- JavaScriptで動的に生成 -->
         </div>
-
-        <button id="btn-add-post" class="secondary">+ 投稿を追加</button>
 
         <div class="btn-group" style="margin-top: 32px;">
           <button id="btn-save">GitHubに保存</button>
@@ -95,7 +93,7 @@
       const REPO = 'tsubox-event';
       const BRANCH = 'main';
       const RANKINGS_FILE = 'rankings.json';
-      const POSTS_FILE = 'featured-posts.json';
+      const DAILY_POSTS_FILE = 'daily-top3.json';
 
       const $ = (id) => document.getElementById(id);
       const login = $('login');
@@ -193,11 +191,30 @@
           $(`prev-${i}`).addEventListener('input', () => updateIndicator(i));
         }
 
-        // 投稿フォームの初期化（最初は3件）
-        const postsForm = $('posts-form');
-        postsForm.innerHTML = '';
-        for (let i = 0; i < 3; i++) {
-          addPostRow();
+        // 昨日のトップ3投稿フォームの初期化
+        const dailyPostsForm = $('daily-posts-form');
+        dailyPostsForm.innerHTML = '';
+
+        for (let i = 1; i <= 3; i++) {
+          const div = document.createElement('div');
+          div.className = 'ranking-row';
+          div.innerHTML = `
+            <div class="row-3">
+              <div>
+                <label for="daily-name-${i}">${i}位 投稿者名</label>
+                <input type="text" id="daily-name-${i}" placeholder="例: 山田太郎" />
+              </div>
+              <div>
+                <label for="daily-likes-${i}">いいね数</label>
+                <input type="number" id="daily-likes-${i}" min="0" placeholder="例: 245" />
+              </div>
+              <div>
+                <label for="daily-image-${i}">画像ファイル名</label>
+                <input type="text" id="daily-image-${i}" placeholder="例: assets/daily-post-${i}.jpg" />
+              </div>
+            </div>
+          `;
+          dailyPostsForm.appendChild(div);
         }
       }
 
@@ -221,40 +238,6 @@
             indicator.className = 'preview-indicator same';
           }
         }
-      }
-
-      let postCounter = 0;
-
-      function addPostRow() {
-        const postsForm = $('posts-form');
-        const div = document.createElement('div');
-        div.className = 'post-row';
-        div.dataset.postId = postCounter++;
-
-        div.innerHTML = `
-          <button class="danger remove-btn" onclick="removePost(this)">削除</button>
-          <div class="row">
-            <div>
-              <label>投稿者名</label>
-              <input type="text" class="post-name" placeholder="例: 山田太郎" />
-            </div>
-            <div>
-              <label>画像ファイル名</label>
-              <input type="text" class="post-thumbnail" placeholder="例: assets/post-1.jpg" />
-            </div>
-          </div>
-          <div>
-            <label>投稿URL</label>
-            <input type="text" class="post-url" placeholder="https://www.facebook.com/..." />
-          </div>
-        `;
-        postsForm.appendChild(div);
-      }
-
-      $('btn-add-post').addEventListener('click', addPostRow);
-
-      window.removePost = function(btn) {
-        btn.closest('.post-row').remove();
       }
 
       $('btn-save').addEventListener('click', async () => {
@@ -304,28 +287,30 @@
           rankingsData[date] = rankings;
           await saveFile(token, RANKINGS_FILE, rankingsData, rankingsFile.sha, `Update rankings for ${date}`);
 
-          // 投稿ギャラリーデータの収集
-          const posts = [];
-          const postRows = document.querySelectorAll('.post-row');
-          postRows.forEach((row, idx) => {
-            const name = row.querySelector('.post-name').value.trim();
-            const thumbnail = row.querySelector('.post-thumbnail').value.trim();
-            const url = row.querySelector('.post-url').value.trim();
+          // 昨日のトップ3投稿データの収集
+          const dailyPosts = [];
+          for (let i = 1; i <= 3; i++) {
+            const name = $(`daily-name-${i}`).value.trim();
+            const likes = $(`daily-likes-${i}`).value.trim();
+            const image = $(`daily-image-${i}`).value.trim();
 
-            if (name && thumbnail && url) {
-              posts.push({
-                id: String(idx + 1),
+            if (name && likes && image) {
+              dailyPosts.push({
+                rank: i,
                 name: name,
-                thumbnail: thumbnail,
-                url: url
+                likes: parseInt(likes),
+                postImage: image
               });
             }
-          });
+          }
 
-          // featured-posts.jsonを保存
-          const postsFile = await fetchFile(token, POSTS_FILE);
-          const postsData = { posts: posts };
-          await saveFile(token, POSTS_FILE, postsData, postsFile.sha, `Update featured posts for ${date}`);
+          // daily-top3.jsonを保存
+          if (dailyPosts.length > 0) {
+            const dailyPostsFile = await fetchFile(token, DAILY_POSTS_FILE);
+            const dailyPostsData = dailyPostsFile.data || {};
+            dailyPostsData[date] = dailyPosts;
+            await saveFile(token, DAILY_POSTS_FILE, dailyPostsData, dailyPostsFile.sha, `Update daily top3 posts for ${date}`);
+          }
 
           msg.textContent = '✓ 保存しました！（数十秒後にサイトへ反映）';
           msg.className='success';

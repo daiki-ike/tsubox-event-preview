@@ -1,0 +1,22 @@
+{
+  "2025-10-24": [
+    {
+      "rank": 1,
+      "name": "サンプル 太郎",
+      "likes": 245,
+      "postImage": "assets/daily-post-1.jpg"
+    },
+    {
+      "rank": 2,
+      "name": "サンプル 花子",
+      "likes": 198,
+      "postImage": "assets/daily-post-2.jpg"
+    },
+    {
+      "rank": 3,
+      "name": "サンプル 一郎",
+      "likes": 175,
+      "postImage": "assets/daily-post-3.jpg"
+    }
+  ]
+}
