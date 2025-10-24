@@ -1,0 +1,54 @@
+{
+  "2025-10-24": [
+    {
+      "rank": 1,
+      "name": "サンプル 太郎",
+      "prevRank": 2
+    },
+    {
+      "rank": 2,
+      "name": "サンプル 花子",
+      "prevRank": 1
+    },
+    {
+      "rank": 3,
+      "name": "サンプル 一郎",
+      "prevRank": 3
+    },
+    {
+      "rank": 4,
+      "name": "サンプル 次郎",
+      "prevRank": 5
+    },
+    {
+      "rank": 5,
+      "name": "サンプル 三郎",
+      "prevRank": 4
+    },
+    {
+      "rank": 6,
+      "name": "サンプル 四郎",
+      "prevRank": 6
+    },
+    {
+      "rank": 7,
+      "name": "サンプル 五郎",
+      "prevRank": null
+    },
+    {
+      "rank": 8,
+      "name": "サンプル 六郎",
+      "prevRank": 9
+    },
+    {
+      "rank": 9,
+      "name": "サンプル 七郎",
+      "prevRank": 8
+    },
+    {
+      "rank": 10,
+      "name": "サンプル 八郎",
+      "prevRank": 10
+    }
+  ]
+}

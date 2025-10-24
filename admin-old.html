@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>管理 | 昨日のトップ3</title>
+    <style>
+      body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; background:#0f1115; color:#e5e7eb; margin:0; }
+      .wrap { max-width: 820px; margin: 32px auto; padding: 0 16px; }
+      h1 { font-size: 22px; margin: 0 0 18px; }
+      .card { background:#16181f; border:1px solid #262a34; border-radius:12px; padding:16px; margin: 12px 0; }
+      label { display:block; margin:12px 0 6px; font-weight:600; }
+      input[type="text"], input[type="password"], input[type="date"], input[type="email"] { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #303544; background:#0f1115; color:#e5e7eb; }
+      .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+      button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid transparent; color:#0b1220; background: linear-gradient(135deg,#14a3d6,#0ea5e9); font-weight:700; }
+      .muted { color:#9aa1ae; font-size: 13px; }
+      .success { color:#34d399; }
+      .error { color:#f87171; }
+      .hidden { display:none; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>管理: 昨日のトップ3</h1>
+
+      <div id="login" class="card">
+        <p class="muted">管理用パスワードを入力してください。</p>
+        <label for="pw">パスワード</label>
+        <input id="pw" type="password" placeholder="********" />
+        <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
+          <button id="btn-login">ログイン</button>
+          <span id="login-msg" class="muted"></span>
+        </div>
+      </div>
+
+      <div id="editor" class="card hidden">
+        <p class="muted">GitHubに反映するため、更新時にGitHubのPersonal Access Token(PAT)が必要です。トークンは保存されません。</p>
+        <div class="row">
+          <div>
+            <label for="date">対象日付（YYYY-MM-DD）</label>
+            <input id="date" type="date" />
+          </div>
+          <div>
+            <label for="token">GitHubトークン（repo:contents 権限）</label>
+            <input id="token" type="password" placeholder="ghp_..." />
+          </div>
+        </div>
+        <label for="n1">1位 氏名（フルネーム）</label>
+        <input id="n1" type="text" />
+        <label for="n2">2位 氏名（フルネーム）</label>
+        <input id="n2" type="text" />
+        <label for="n3">3位 氏名（フルネーム）</label>
+        <input id="n3" type="text" />
+        <div style="margin-top:14px; display:flex; gap:10px; align-items:center;">
+          <button id="btn-save">GitHubに保存</button>
+          <span id="msg" class="muted"></span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 共有パスワード（必要に応じて変更）
+      const ADMIN_PASSWORD = 'tsubox-admin';
+      const OWNER = 'daiki-ike';
+      const REPO = 'tsubox-event';
+      const BRANCH = 'main';
+      const FILE_PATH = 'top3.json';
+
+      const $ = (id) => document.getElementById(id);
+      const login = $('login');
+      const editor = $('editor');
+      const loginMsg = $('login-msg');
+      const msg = $('msg');
+
+      // 既定の日付=昨日（JST）
+      (function setDefaultDate(){
+        const now = Date.now();
+        const jst = new Date(now + 9*60*60*1000);
+        const yst = new Date(jst.getTime() - 24*60*60*1000);
+        const y = yst.getUTCFullYear();
+        const m = String(yst.getUTCMonth()+1).padStart(2,'0');
+        const d = String(yst.getUTCDate()).padStart(2,'0');
+        $('date').value = `${y}-${m}-${d}`;
+      })();
+
+      $('btn-login').addEventListener('click', () => {
+        if ($('pw').value === ADMIN_PASSWORD) {
+          login.classList.add('hidden');
+          editor.classList.remove('hidden');
+          loginMsg.textContent = '';
+        } else {
+          loginMsg.textContent = 'パスワードが違います。';
+          loginMsg.className = 'error';
+        }
+      });
+
+      function b64encode(str){return btoa(unescape(encodeURIComponent(str)));}
+      function b64decode(str){return decodeURIComponent(escape(atob(str)));}
+
+      async function fetchCurrent(token){
+        const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`;
+        const res = await fetch(url, { headers: { 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28', ...(token?{Authorization:`token ${token}`}:{}) }});
+        if (!res.ok) throw new Error('top3.json の取得に失敗しました');
+        const j = await res.json();
+        const content = j.content ? b64decode(j.content) : '{}';
+        return { sha: j.sha, data: JSON.parse(content) };
+      }
+
+      async function saveToGitHub(token, data, baseSha){
+        const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
+        const body = {
+          message: `Update top3 for ${$('date').value}`,
+          content: b64encode(JSON.stringify(data, null, 2) + '\n'),
+          branch: BRANCH,
+          sha: baseSha
+        };
+        const res = await fetch(url, { method:'PUT', headers:{ 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28', 'Authorization':`token ${token}` }, body: JSON.stringify(body) });
+        if (!res.ok) throw new Error('GitHub への保存に失敗しました');
+        return await res.json();
+      }
+
+      $('btn-save').addEventListener('click', async () => {
+        msg.textContent = '保存中…'; msg.className = 'muted';
+        const token = $('token').value.trim();
+        if (!token) { msg.textContent = 'GitHubトークンを入力してください。'; msg.className='error'; return; }
+        const date = $('date').value;
+        const n1 = $('n1').value.trim();
+        const n2 = $('n2').value.trim();
+        const n3 = $('n3').value.trim();
+        if (!date || !n1 || !n2 || !n3) { msg.textContent = '日付と1～3位の氏名を入力してください。'; msg.className='error'; return; }
+        try {
+          const cur = await fetchCurrent(token);
+          const data = cur.data || {};
+          data[date] = [n1, n2, n3];
+          await saveToGitHub(token, data, cur.sha);
+          msg.textContent = '保存しました。（数十秒後にサイトへ反映）'; msg.className='success';
+        } catch (e) {
+          console.error(e);
+          msg.textContent = e.message || '保存に失敗しました。'; msg.className='error';
+        }
+      });
+    </script>
+  </body>
+  </html>
+

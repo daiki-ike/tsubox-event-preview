@@ -41,6 +41,9 @@
     if (now <= end.getTime()) return 'live';
     return 'post';
   }
+
+  let confettiTriggered = false;
+
   function tick() {
     const mode = updateMode();
     if (mode === 'pre') {
@@ -57,6 +60,40 @@
       dd.textContent = hh.textContent = mm.textContent = ss.textContent = '00';
       label.textContent = '';
       ended.hidden = false;
+
+      // イベント終了後、紙吹雪を1度だけ実行
+      if (!confettiTriggered && typeof confetti !== 'undefined') {
+        confettiTriggered = true;
+
+        // 連続して紙吹雪を降らせる
+        const duration = 5 * 1000; // 5秒間
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        function randomInRange(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(function() {
+          const timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          const particleCount = 50 * (timeLeft / duration);
+
+          // トップ3エリアから紙吹雪を発射
+          confetti(Object.assign({}, defaults, {
+            particleCount,
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+          }));
+          confetti(Object.assign({}, defaults, {
+            particleCount,
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+          }));
+        }, 250);
+      }
     }
   }
   tick();
@@ -152,11 +189,12 @@
     startAuto();
   })();
 
-  // 昨日のトップ3（名前のみ、順位表示あり）
-  (async function renderTop3() {
-    const wrap = document.getElementById('top3-list');
+  // ランキング表示機能（1-10位、前日比較付き）
+  (async function renderRankings() {
+    const top3Wrap = document.getElementById('top3-list');
+    const rankings410Wrap = document.getElementById('rankings-4-10-list');
     const note = document.getElementById('top3-note');
-    if (!wrap) return;
+    if (!top3Wrap) return;
 
     const nowUtc = Date.now();
     const jst = new Date(nowUtc + 9 * 60 * 60 * 1000);
@@ -164,35 +202,209 @@
     const key = `${yst.getUTCFullYear()}-${String(yst.getUTCMonth()+1).padStart(2,'0')}-${String(yst.getUTCDate()).padStart(2,'0')}`;
 
     try {
-      const res = await fetch('top3.json', { cache: 'no-store' });
-      if (!res.ok) throw new Error('top3.json not found');
+      const res = await fetch('rankings.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('rankings.json not found');
       const data = await res.json();
-      let names = [];
-      if (Array.isArray(data[key])) names = data[key];
-      else if (data[key] && typeof data[key] === 'object') names = [data[key]['1'], data[key]['2'], data[key]['3']].filter(Boolean);
-      if (!names.length) {
+      let rankings = [];
+
+      // 今日のデータを取得、なければ最新のデータを使用
+      if (Array.isArray(data[key])) {
+        rankings = data[key];
+      } else {
         const keys = Object.keys(data || {}).sort();
         const last = keys[keys.length - 1];
-        if (last) names = Array.isArray(data[last]) ? data[last] : [data[last]['1'], data[last]['2'], data[last]['3']].filter(Boolean);
-        note && (note.textContent = `ランキング集計日: ${(last || key).replaceAll('-', '/')}`);
-      } else {
+        if (last && Array.isArray(data[last])) {
+          rankings = data[last];
+          note && (note.textContent = `ランキング集計日: ${last.replaceAll('-', '/')}`);
+        }
+      }
+
+      if (rankings.length === 0) {
+        note && (note.textContent = 'ランキングデータがありません');
+        return;
+      } else if (!note.textContent) {
         note && (note.textContent = `ランキング集計日: ${key.replaceAll('-', '/')}`);
       }
-      wrap.innerHTML = '';
+
+      // 矢印と変動を計算する関数
+      function getChangeIndicator(rank, prevRank) {
+        if (prevRank === null || prevRank === undefined) {
+          return '<span class="ranking-change new">NEW</span>';
+        }
+        const diff = prevRank - rank;
+        if (diff > 0) {
+          return `<span class="ranking-change up">↑</span>`;
+        } else if (diff < 0) {
+          return `<span class="ranking-change down">↓</span>`;
+        } else {
+          return '<span class="ranking-change same">←</span>';
+        }
+      }
+
+      // トップ3の表示
       const medalSvg = '<svg class="medal__icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h10l-2 6H9L7 2zm5 7a6 6 0 1 1 0 12a6 6 0 0 1 0-12zm0 2.3l1.38 2.8l3.1.45l-2.24 2.17l.53 3.08L12 18.2l-2.77 1.46l.53-3.08L7.5 12.55l3.1-.45L12 11.3z"/></svg>';
       const ranks = ['gold', 'silver', 'bronze'];
-      names.slice(0,3).forEach((name, idx) => {
-        const card = document.createElement('div'); card.className = 'prize';
+      top3Wrap.innerHTML = '';
+
+      rankings.slice(0, 3).forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'prize';
         card.style.position = 'relative';
-        const medal = document.createElement('div'); medal.className = `medal ${ranks[idx] || 'gold'}`; medal.setAttribute('aria-label', `${idx+1}位`); medal.innerHTML = medalSvg;
-        const body = document.createElement('div'); body.className = 'prize__body';
-        const p = document.createElement('p'); p.innerHTML = `<span class="rank-label">${idx+1}</span><span class="rank-name">${name||''}</span>`;
+
+        const medal = document.createElement('div');
+        medal.className = `medal ${ranks[idx] || 'gold'}`;
+        medal.setAttribute('aria-label', `${idx+1}位`);
+        medal.innerHTML = medalSvg;
+
+        const body = document.createElement('div');
+        body.className = 'prize__body';
+
+        const p = document.createElement('p');
+        p.innerHTML = `<span class="rank-name">${item.name || ''}</span>${getChangeIndicator(item.rank, item.prevRank)}`;
+
         body.appendChild(p);
-        card.appendChild(medal); card.appendChild(body); wrap.appendChild(card);
+        card.appendChild(medal);
+        card.appendChild(body);
+        top3Wrap.appendChild(card);
       });
+
+      // 4-10位の表示
+      if (rankings410Wrap && rankings.length > 3) {
+        rankings410Wrap.innerHTML = '';
+        rankings.slice(3, 10).forEach((item) => {
+          const rankItem = document.createElement('div');
+          rankItem.className = 'ranking-item';
+          rankItem.innerHTML = `
+            <div class="ranking-number">${item.rank}</div>
+            <div class="ranking-name">${item.name || ''}</div>
+            ${getChangeIndicator(item.rank, item.prevRank)}
+          `;
+          rankings410Wrap.appendChild(rankItem);
+        });
+      }
     } catch (e) {
-      note && (note.textContent = 'トップ3の読み込みに失敗しました。');
+      note && (note.textContent = 'ランキングの読み込みに失敗しました。');
       try { console.error(e); } catch {}
+    }
+  })();
+
+  // Facebook投稿ギャラリー
+  (async function renderFeaturedPosts() {
+    const grid = document.getElementById('posts-grid');
+    const dotsWrap = document.getElementById('posts-dots');
+    if (!grid) return;
+
+    try {
+      const res = await fetch('featured-posts.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('featured-posts.json not found');
+      const data = await res.json();
+      const posts = data.posts || [];
+
+      if (posts.length === 0) return;
+
+      // 投稿カードを生成
+      grid.innerHTML = '';
+      posts.forEach((post) => {
+        const card = document.createElement('a');
+        card.className = 'post-card';
+        card.href = post.url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+
+        const img = document.createElement('img');
+        img.className = 'post-thumbnail';
+        img.src = post.thumbnail;
+        img.alt = `${post.name}の投稿`;
+        img.loading = 'lazy';
+
+        // 画像読み込みエラー時のフォールバック
+        img.onerror = function() {
+          this.style.background = 'linear-gradient(135deg, rgba(34,193,241,0.2), rgba(20,163,214,0.2))';
+          this.alt = '画像を読み込めませんでした';
+        };
+
+        const info = document.createElement('div');
+        info.className = 'post-info';
+
+        const name = document.createElement('p');
+        name.className = 'post-name';
+        name.textContent = post.name;
+
+        info.appendChild(name);
+        card.appendChild(img);
+        card.appendChild(info);
+        grid.appendChild(card);
+      });
+
+      // カルーセル機能（既存のCMカルーセルと同じロジック）
+      const perPage = Number(grid.getAttribute('data-per-page') || 3);
+      const intervalMs = Number(grid.getAttribute('data-interval') || 6000);
+      const auto = String(grid.getAttribute('data-auto') || 'true') !== 'false';
+      const items = Array.from(grid.querySelectorAll('.post-card'));
+      let page = 1;
+      let totalPages = Math.max(1, Math.ceil(items.length / perPage));
+      let timer = null;
+
+      function render() {
+        const start = (page - 1) * perPage;
+        const end = start + perPage;
+        items.forEach((el, i) => {
+          el.style.display = (i >= start && i < end) ? '' : 'none';
+        });
+        if (dotsWrap) {
+          const dots = Array.from(dotsWrap.querySelectorAll('.cm-dot'));
+          dots.forEach((d, i) => d.classList.toggle('is-active', i === page - 1));
+        }
+      }
+
+      function buildDots() {
+        if (!dotsWrap || totalPages <= 1) return;
+        dotsWrap.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'cm-dot';
+          btn.setAttribute('aria-label', `${i}ページ目へ`);
+          btn.addEventListener('click', () => {
+            stopAuto();
+            page = i;
+            render();
+            startAuto();
+          });
+          dotsWrap.appendChild(btn);
+        }
+      }
+
+      function nextPage() {
+        page = page >= totalPages ? 1 : page + 1;
+        render();
+      }
+
+      function startAuto() {
+        if (!auto || timer || totalPages <= 1) return;
+        timer = setInterval(nextPage, intervalMs);
+      }
+
+      function stopAuto() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      // ホバーで一時停止
+      [grid, dotsWrap].filter(Boolean).forEach((el) => {
+        el.addEventListener('mouseenter', stopAuto);
+        el.addEventListener('mouseleave', startAuto);
+        el.addEventListener('focusin', stopAuto);
+        el.addEventListener('focusout', startAuto);
+      });
+
+      buildDots();
+      render();
+      startAuto();
+    } catch (e) {
+      try { console.error('Featured posts error:', e); } catch {}
     }
   })();
 })();

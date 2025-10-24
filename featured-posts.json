@@ -1,0 +1,22 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "name": "サンプル 太郎",
+      "thumbnail": "assets/post-thumb-1.jpg",
+      "url": "https://www.facebook.com/"
+    },
+    {
+      "id": "2",
+      "name": "サンプル 花子",
+      "thumbnail": "assets/post-thumb-2.jpg",
+      "url": "https://www.facebook.com/"
+    },
+    {
+      "id": "3",
+      "name": "サンプル 一郎",
+      "thumbnail": "assets/post-thumb-3.jpg",
+      "url": "https://www.facebook.com/"
+    }
+  ]
+}
