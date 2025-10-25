@@ -80,22 +80,22 @@
     {
       "rank": 6,
       "name": "ff",
-      "prevRank": 8
+      "prevRank": 10
     },
     {
       "rank": 7,
       "name": "gg",
-      "prevRank": null
+      "prevRank": 9
     },
     {
       "rank": 8,
       "name": "hh",
-      "prevRank": 10
+      "prevRank": null
     },
     {
       "rank": 9,
       "name": "ii",
-      "prevRank": 9
+      "prevRank": 7
     },
     {
       "rank": 10,
