@@ -2,53 +2,53 @@
   "2025-10-24": [
     {
       "rank": 1,
-      "name": "ああ",
-      "prevRank": 1
-    },
-    {
-      "rank": 2,
-      "name": "ｑｑ",
-      "prevRank": 3
-    },
-    {
-      "rank": 3,
-      "name": "うう",
+      "name": "サンプル 太郎",
       "prevRank": 2
     },
     {
+      "rank": 2,
+      "name": "サンプル 花子",
+      "prevRank": 1
+    },
+    {
+      "rank": 3,
+      "name": "サンプル 一郎",
+      "prevRank": 3
+    },
+    {
       "rank": 4,
-      "name": "ええ",
+      "name": "サンプル 次郎",
       "prevRank": 5
     },
     {
       "rank": 5,
-      "name": "おお",
-      "prevRank": 7
+      "name": "サンプル 三郎",
+      "prevRank": 4
     },
     {
       "rank": 6,
-      "name": "かか",
+      "name": "サンプル 四郎",
       "prevRank": 6
     },
     {
       "rank": 7,
-      "name": "きき",
+      "name": "サンプル 五郎",
       "prevRank": null
     },
     {
       "rank": 8,
-      "name": "keke",
-      "prevRank": null
+      "name": "サンプル 六郎",
+      "prevRank": 9
     },
     {
       "rank": 9,
-      "name": "くく",
-      "prevRank": null
+      "name": "サンプル 七郎",
+      "prevRank": 8
     },
     {
       "rank": 10,
-      "name": "けけ",
-      "prevRank": null
+      "name": "サンプル 八郎",
+      "prevRank": 10
     }
   ]
 }

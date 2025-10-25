@@ -3,55 +3,83 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>管理 | 昨日のトップ3</title>
+    <title>管理 | ランキング＆投稿ギャラリー</title>
     <style>
-      body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; background:#0f1115; color:#e5e7eb; margin:0; }
-      .wrap { max-width: 820px; margin: 32px auto; padding: 0 16px; }
-      h1 { font-size: 22px; margin: 0 0 18px; }
-      .card { background:#16181f; border:1px solid #262a34; border-radius:12px; padding:16px; margin: 12px 0; }
-      label { display:block; margin:12px 0 6px; font-weight:600; }
-      input[type="text"], input[type="password"], input[type="date"], input[type="email"] { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #303544; background:#0f1115; color:#e5e7eb; }
-      .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
-      button { cursor:pointer; padding:10px 14px; border-radius:10px; border:1px solid transparent; color:#0b1220; background: linear-gradient(135deg,#14a3d6,#0ea5e9); font-weight:700; }
-      .muted { color:#9aa1ae; font-size: 13px; }
+      body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Hiragino Kaku Gothic ProN', 'Yu Gothic', Meiryo, sans-serif; background:#0f1115; color:#e5e7eb; margin:0; padding-bottom: 60px; }
+      .wrap { max-width: 900px; margin: 32px auto; padding: 0 16px; }
+      h1 { font-size: 24px; margin: 0 0 24px; text-align: center; }
+      h2 { font-size: 20px; margin: 32px 0 16px; border-bottom: 2px solid #262a34; padding-bottom: 8px; }
+      .card { background:#16181f; border:1px solid #262a34; border-radius:12px; padding:20px; margin: 16px 0; }
+      label { display:block; margin:12px 0 6px; font-weight:600; font-size: 14px; }
+      input[type="text"], input[type="password"], input[type="date"], input[type="number"], textarea { width:100%; padding:10px 12px; border-radius:10px; border:1px solid #303544; background:#0f1115; color:#e5e7eb; font-family: inherit; }
+      textarea { min-height: 80px; resize: vertical; }
+      .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom: 12px; }
+      .row-3 { display:grid; grid-template-columns: 2fr 1fr 1fr; gap:12px; margin-bottom: 12px; }
+      button { cursor:pointer; padding:10px 16px; border-radius:10px; border:1px solid transparent; color:#0b1220; background: linear-gradient(135deg,#14a3d6,#0ea5e9); font-weight:700; transition: transform 0.2s ease; }
+      button:hover { transform: translateY(-1px); }
+      button.secondary { background: #262a34; color: #e5e7eb; border: 1px solid #303544; }
+      button.danger { background: #ef4444; color: white; }
+      .muted { color:#9aa1ae; font-size: 13px; margin-top: 8px; }
       .success { color:#34d399; }
       .error { color:#f87171; }
       .hidden { display:none; }
+      .ranking-row { background: #1a1c24; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #262a34; }
+      .post-row { background: #1a1c24; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #262a34; position: relative; }
+      .remove-btn { position: absolute; top: 8px; right: 8px; padding: 4px 10px; font-size: 12px; }
+      .btn-group { display: flex; gap: 12px; margin-top: 16px; align-items: center; flex-wrap: wrap; }
+      .note-box { background: rgba(34,193,241,0.1); border: 1px solid rgba(34,193,241,0.3); border-radius: 8px; padding: 12px; margin: 16px 0; }
+      .preview-indicator { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: #9aa1ae; }
+      .preview-indicator.up { color: #3b82f6; }
+      .preview-indicator.same { color: #ffffff; }
+      .preview-indicator.down { color: #ef4444; }
+      .preview-indicator.new { color: #eab308; }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <h1>管理: 昨日のトップ3</h1>
+      <h1>管理画面 | ランキング＆投稿ギャラリー</h1>
 
       <div id="login" class="card">
         <p class="muted">管理用パスワードを入力してください。</p>
         <label for="pw">パスワード</label>
         <input id="pw" type="password" placeholder="********" />
-        <div style="margin-top:12px; display:flex; gap:10px; align-items:center;">
+        <div class="btn-group">
           <button id="btn-login">ログイン</button>
           <span id="login-msg" class="muted"></span>
         </div>
       </div>
 
       <div id="editor" class="card hidden">
-        <p class="muted">GitHubに反映するため、更新時にGitHubのPersonal Access Token(PAT)が必要です。トークンは保存されません。</p>
+        <div class="note-box">
+          <p style="margin: 0; font-size: 14px;">GitHubに反映するため、更新時にGitHub Personal Access Token (PAT) が必要です。トークンは保存されません。</p>
+        </div>
+
         <div class="row">
           <div>
             <label for="date">対象日付（YYYY-MM-DD）</label>
             <input id="date" type="date" />
           </div>
           <div>
-            <label for="token">GitHubトークン（repo:contents 権限）</label>
+            <label for="token">GitHubトークン（repo権限）</label>
             <input id="token" type="password" placeholder="ghp_..." />
           </div>
         </div>
-        <label for="n1">1位 氏名（フルネーム）</label>
-        <input id="n1" type="text" />
-        <label for="n2">2位 氏名（フルネーム）</label>
-        <input id="n2" type="text" />
-        <label for="n3">3位 氏名（フルネーム）</label>
-        <input id="n3" type="text" />
-        <div style="margin-top:14px; display:flex; gap:10px; align-items:center;">
+
+        <h2>📊 ランキング管理（1位～10位）</h2>
+        <p class="muted">前日順位を入力すると、自動で矢印（↑↓←）が計算されます。新規の場合は空欄にしてください。</p>
+
+        <div id="rankings-form">
+          <!-- JavaScriptで動的に生成 -->
+        </div>
+
+        <h2>📸 昨日のトップ3投稿</h2>
+        <p class="muted">昨日だけのいいね数トップ3を入力します。画像は assets/ フォルダに配置してください。<br>※ 通算ランキングとは別に、1日限定の人気投稿を紹介します。</p>
+
+        <div id="daily-posts-form">
+          <!-- JavaScriptで動的に生成 -->
+        </div>
+
+        <div class="btn-group" style="margin-top: 32px;">
           <button id="btn-save">GitHubに保存</button>
           <span id="msg" class="muted"></span>
         </div>
@@ -59,12 +87,13 @@
     </div>
 
     <script>
-      // 共有パスワード（必要に応じて変更）
+      // 共有パスワード
       const ADMIN_PASSWORD = 'tsubox-admin';
       const OWNER = 'daiki-ike';
       const REPO = 'tsubox-event';
       const BRANCH = 'main';
-      const FILE_PATH = 'top3.json';
+      const RANKINGS_FILE = 'rankings.json';
+      const DAILY_POSTS_FILE = 'daily-top3.json';
 
       const $ = (id) => document.getElementById(id);
       const login = $('login');
@@ -72,14 +101,13 @@
       const loginMsg = $('login-msg');
       const msg = $('msg');
 
-      // 既定の日付=昨日（JST）
+      // 既定の日付=今日（JST）
       (function setDefaultDate(){
         const now = Date.now();
         const jst = new Date(now + 9*60*60*1000);
-        const yst = new Date(jst.getTime() - 24*60*60*1000);
-        const y = yst.getUTCFullYear();
-        const m = String(yst.getUTCMonth()+1).padStart(2,'0');
-        const d = String(yst.getUTCDate()).padStart(2,'0');
+        const y = jst.getUTCFullYear();
+        const m = String(jst.getUTCMonth()+1).padStart(2,'0');
+        const d = String(jst.getUTCDate()).padStart(2,'0');
         $('date').value = `${y}-${m}-${d}`;
       })();
 
@@ -88,6 +116,7 @@
           login.classList.add('hidden');
           editor.classList.remove('hidden');
           loginMsg.textContent = '';
+          initForms();
         } else {
           loginMsg.textContent = 'パスワードが違います。';
           loginMsg.className = 'error';
@@ -97,49 +126,200 @@
       function b64encode(str){return btoa(unescape(encodeURIComponent(str)));}
       function b64decode(str){return decodeURIComponent(escape(atob(str)));}
 
-      async function fetchCurrent(token){
-        const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}?ref=${BRANCH}`;
-        const res = await fetch(url, { headers: { 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28', ...(token?{Authorization:`token ${token}`}:{}) }});
-        if (!res.ok) throw new Error('top3.json の取得に失敗しました');
+      async function fetchFile(token, filepath){
+        const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${filepath}?ref=${BRANCH}`;
+        const res = await fetch(url, {
+          headers: {
+            'Accept':'application/vnd.github+json',
+            'X-GitHub-Api-Version':'2022-11-28',
+            ...(token?{Authorization:`token ${token}`}:{})
+          }
+        });
+        if (!res.ok) return { sha: null, data: null };
         const j = await res.json();
         const content = j.content ? b64decode(j.content) : '{}';
         return { sha: j.sha, data: JSON.parse(content) };
       }
 
-      async function saveToGitHub(token, data, baseSha){
-        const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${FILE_PATH}`;
+      async function saveFile(token, filepath, data, baseSha, commitMessage){
+        const url = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${filepath}`;
         const body = {
-          message: `Update top3 for ${$('date').value}`,
+          message: commitMessage,
           content: b64encode(JSON.stringify(data, null, 2) + '\n'),
           branch: BRANCH,
-          sha: baseSha
+          ...(baseSha && {sha: baseSha})
         };
-        const res = await fetch(url, { method:'PUT', headers:{ 'Accept':'application/vnd.github+json', 'X-GitHub-Api-Version':'2022-11-28', 'Authorization':`token ${token}` }, body: JSON.stringify(body) });
-        if (!res.ok) throw new Error('GitHub への保存に失敗しました');
+        const res = await fetch(url, {
+          method:'PUT',
+          headers:{
+            'Accept':'application/vnd.github+json',
+            'X-GitHub-Api-Version':'2022-11-28',
+            'Authorization':`token ${token}`
+          },
+          body: JSON.stringify(body)
+        });
+        if (!res.ok) throw new Error(`GitHub保存失敗: ${filepath}`);
         return await res.json();
       }
 
+      // ランキングフォームの初期化
+      function initForms() {
+        const rankingsForm = $('rankings-form');
+        rankingsForm.innerHTML = '';
+
+        for (let i = 1; i <= 10; i++) {
+          const div = document.createElement('div');
+          div.className = 'ranking-row';
+          div.innerHTML = `
+            <div class="row-3">
+              <div>
+                <label for="name-${i}">${i}位 氏名</label>
+                <input type="text" id="name-${i}" placeholder="例: 山田太郎" />
+              </div>
+              <div>
+                <label for="prev-${i}">前日順位</label>
+                <input type="number" id="prev-${i}" min="1" max="20" placeholder="例: 2" />
+              </div>
+              <div style="display: flex; align-items: flex-end;">
+                <span id="indicator-${i}" class="preview-indicator"></span>
+              </div>
+            </div>
+          `;
+          rankingsForm.appendChild(div);
+
+          // 前日順位が変更されたら矢印をプレビュー
+          $(`prev-${i}`).addEventListener('input', () => updateIndicator(i));
+        }
+
+        // 昨日のトップ3投稿フォームの初期化
+        const dailyPostsForm = $('daily-posts-form');
+        dailyPostsForm.innerHTML = '';
+
+        for (let i = 1; i <= 3; i++) {
+          const div = document.createElement('div');
+          div.className = 'ranking-row';
+          div.innerHTML = `
+            <div class="row-3">
+              <div>
+                <label for="daily-name-${i}">${i}位 投稿者名</label>
+                <input type="text" id="daily-name-${i}" placeholder="例: 山田太郎" />
+              </div>
+              <div>
+                <label for="daily-likes-${i}">いいね数</label>
+                <input type="number" id="daily-likes-${i}" min="0" placeholder="例: 245" />
+              </div>
+              <div>
+                <label for="daily-image-${i}">画像ファイル名</label>
+                <input type="text" id="daily-image-${i}" placeholder="例: assets/daily-post-${i}.jpg" />
+              </div>
+            </div>
+          `;
+          dailyPostsForm.appendChild(div);
+        }
+      }
+
+      function updateIndicator(rank) {
+        const prevRank = parseInt($(`prev-${rank}`).value);
+        const indicator = $(`indicator-${rank}`);
+
+        if (isNaN(prevRank) || prevRank === '') {
+          indicator.textContent = 'NEW';
+          indicator.className = 'preview-indicator new';
+        } else {
+          const diff = prevRank - rank;
+          if (diff > 0) {
+            indicator.textContent = '↑ ランクアップ';
+            indicator.className = 'preview-indicator up';
+          } else if (diff < 0) {
+            indicator.textContent = '↓ ランクダウン';
+            indicator.className = 'preview-indicator down';
+          } else {
+            indicator.textContent = '← 変動なし';
+            indicator.className = 'preview-indicator same';
+          }
+        }
+      }
+
       $('btn-save').addEventListener('click', async () => {
-        msg.textContent = '保存中…'; msg.className = 'muted';
+        msg.textContent = '保存中…';
+        msg.className = 'muted';
+
         const token = $('token').value.trim();
-        if (!token) { msg.textContent = 'GitHubトークンを入力してください。'; msg.className='error'; return; }
+        if (!token) {
+          msg.textContent = 'GitHubトークンを入力してください。';
+          msg.className='error';
+          return;
+        }
+
         const date = $('date').value;
-        const n1 = $('n1').value.trim();
-        const n2 = $('n2').value.trim();
-        const n3 = $('n3').value.trim();
-        if (!date || !n1 || !n2 || !n3) { msg.textContent = '日付と1～3位の氏名を入力してください。'; msg.className='error'; return; }
+        if (!date) {
+          msg.textContent = '日付を入力してください。';
+          msg.className='error';
+          return;
+        }
+
         try {
-          const cur = await fetchCurrent(token);
-          const data = cur.data || {};
-          data[date] = [n1, n2, n3];
-          await saveToGitHub(token, data, cur.sha);
-          msg.textContent = '保存しました。（数十秒後にサイトへ反映）'; msg.className='success';
+          // ランキングデータの収集
+          const rankings = [];
+          for (let i = 1; i <= 10; i++) {
+            const name = $(`name-${i}`).value.trim();
+            if (!name) continue;
+
+            const prevRankValue = $(`prev-${i}`).value.trim();
+            const prevRank = prevRankValue ? parseInt(prevRankValue) : null;
+
+            rankings.push({
+              rank: i,
+              name: name,
+              prevRank: prevRank
+            });
+          }
+
+          if (rankings.length === 0) {
+            msg.textContent = '少なくとも1名のランキングを入力してください。';
+            msg.className = 'error';
+            return;
+          }
+
+          // rankings.jsonを保存
+          const rankingsFile = await fetchFile(token, RANKINGS_FILE);
+          const rankingsData = rankingsFile.data || {};
+          rankingsData[date] = rankings;
+          await saveFile(token, RANKINGS_FILE, rankingsData, rankingsFile.sha, `Update rankings for ${date}`);
+
+          // 昨日のトップ3投稿データの収集
+          const dailyPosts = [];
+          for (let i = 1; i <= 3; i++) {
+            const name = $(`daily-name-${i}`).value.trim();
+            const likes = $(`daily-likes-${i}`).value.trim();
+            const image = $(`daily-image-${i}`).value.trim();
+
+            if (name && likes && image) {
+              dailyPosts.push({
+                rank: i,
+                name: name,
+                likes: parseInt(likes),
+                postImage: image
+              });
+            }
+          }
+
+          // daily-top3.jsonを保存
+          if (dailyPosts.length > 0) {
+            const dailyPostsFile = await fetchFile(token, DAILY_POSTS_FILE);
+            const dailyPostsData = dailyPostsFile.data || {};
+            dailyPostsData[date] = dailyPosts;
+            await saveFile(token, DAILY_POSTS_FILE, dailyPostsData, dailyPostsFile.sha, `Update daily top3 posts for ${date}`);
+          }
+
+          msg.textContent = '✓ 保存しました！（数十秒後にサイトへ反映）';
+          msg.className='success';
         } catch (e) {
           console.error(e);
-          msg.textContent = e.message || '保存に失敗しました。'; msg.className='error';
+          msg.textContent = `保存に失敗しました: ${e.message}`;
+          msg.className='error';
         }
       });
     </script>
   </body>
-  </html>
-
+</html>

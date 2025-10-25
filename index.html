@@ -31,7 +31,8 @@
     <meta name="twitter:image" content="https://daiki-ike.github.io/tsubox-event/assets/ogp-facebook.png?v=13" />
 
     <link rel="icon" href="assets/logo.png" />
-    <link rel="stylesheet" href="styles.css?v=41" />
+    <link rel="stylesheet" href="styles.css?v=42" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
   </head>
   <body>
     <header class="hero">
@@ -49,6 +50,14 @@
             <h2>現在のトップ3</h2>
             <div class="prizes" id="top3-list" aria-live="polite"></div>
             <p class="note" id="top3-note"></p>
+          </div>
+        </section>
+
+        <!-- 4位～10位のランキング -->
+        <section class="section" id="rankings-4-10">
+          <div class="container">
+            <h2>4位～10位</h2>
+            <div class="rankings-list" id="rankings-4-10-list" aria-live="polite"></div>
           </div>
         </section>
 
@@ -81,61 +90,12 @@
         </span>
       </a>
 
-      <section class="section alt portrait" id="cm">
+      <section class="section alt" id="daily-top3-posts">
         <div class="container">
-          <h2>CM</h2>
-          <div class="cm-controls">
-            <div class="cm-dots" id="cm-dots" aria-label="CMページ切り替え"></div>
-          </div>
-          <div class="video-grid" id="cm-grid" data-per-page="3" data-auto="true" data-interval="6000">
-            <figure class="video-shell">
-              <video class="cm-video" controls preload="metadata" poster="assets/video-poster-1.jpg" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture>
-                <source src="assets/CM1.mp4" type="video/mp4" />
-              </video>
-              <div class="video-overlay" aria-hidden="true"><span class="play-badge"></span></div>
-              <figcaption>CM 1</figcaption>
-            </figure>
-
-            <figure class="video-shell">
-              <video class="cm-video" controls preload="metadata" poster="assets/video-poster-2.jpg" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture>
-                <source src="assets/CM2.mp4" type="video/mp4" />
-              </video>
-              <div class="video-overlay" aria-hidden="true"><span class="play-badge"></span></div>
-              <figcaption>CM 2</figcaption>
-            </figure>
-
-            <figure class="video-shell">
-              <video class="cm-video" controls preload="metadata" poster="assets/video-poster-3.jpg" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture>
-                <source src="assets/CM3.mp4" type="video/mp4" />
-              </video>
-              <div class="video-overlay" aria-hidden="true"><span class="play-badge"></span></div>
-              <figcaption>CM 3</figcaption>
-            </figure>
-
-            <!-- 追加の3本 -->
-            <figure class="video-shell">
-              <video class="cm-video" controls preload="metadata" poster="assets/video-poster-4.jpg" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture>
-                <source src="assets/CM4.mp4" type="video/mp4" />
-              </video>
-              <div class="video-overlay" aria-hidden="true"><span class="play-badge"></span></div>
-              <figcaption>CM 4</figcaption>
-            </figure>
-
-            <figure class="video-shell">
-              <video class="cm-video" controls preload="metadata" poster="assets/video-poster-5.jpg" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture>
-                <source src="assets/CM5.mp4" type="video/mp4" />
-              </video>
-              <div class="video-overlay" aria-hidden="true"><span class="play-badge"></span></div>
-              <figcaption>CM 5</figcaption>
-            </figure>
-
-            <figure class="video-shell">
-              <video class="cm-video" controls preload="metadata" poster="assets/video-poster-6.jpg" controlslist="nodownload noplaybackrate noremoteplayback" disablepictureinpicture>
-                <source src="assets/CM6.mp4" type="video/mp4" />
-              </video>
-              <div class="video-overlay" aria-hidden="true"><span class="play-badge"></span></div>
-              <figcaption>CM 6</figcaption>
-            </figure>
+          <h2>昨日のトップ3投稿</h2>
+          <p class="note" id="daily-top3-note"></p>
+          <div class="daily-posts-grid" id="daily-posts-grid">
+            <!-- 投稿はJavaScriptで動的に読み込まれます -->
           </div>
         </div>
       </section>
@@ -199,6 +159,6 @@
       </div>
     </footer>
 
-    <script src="script.js?v=41"></script>
+    <script src="script.js?v=42"></script>
   </body>
 </html>
