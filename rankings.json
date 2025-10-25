@@ -50,5 +50,57 @@
       "name": "サンプル 八郎",
       "prevRank": 10
     }
+  ],
+  "2025-10-25": [
+    {
+      "rank": 1,
+      "name": "aa",
+      "prevRank": 1
+    },
+    {
+      "rank": 2,
+      "name": "bb",
+      "prevRank": 3
+    },
+    {
+      "rank": 3,
+      "name": "cc",
+      "prevRank": 2
+    },
+    {
+      "rank": 4,
+      "name": "dd",
+      "prevRank": 4
+    },
+    {
+      "rank": 5,
+      "name": "ee",
+      "prevRank": 7
+    },
+    {
+      "rank": 6,
+      "name": "ff",
+      "prevRank": 8
+    },
+    {
+      "rank": 7,
+      "name": "gg",
+      "prevRank": null
+    },
+    {
+      "rank": 8,
+      "name": "hh",
+      "prevRank": 10
+    },
+    {
+      "rank": 9,
+      "name": "ii",
+      "prevRank": 9
+    },
+    {
+      "rank": 10,
+      "name": "jj",
+      "prevRank": null
+    }
   ]
 }
