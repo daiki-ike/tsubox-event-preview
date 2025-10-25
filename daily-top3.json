@@ -2,21 +2,18 @@
   "2025-10-24": [
     {
       "rank": 1,
-      "name": "サンプル 太郎",
-      "likes": 245,
-      "postImage": "assets/daily-post-1.jpg"
+      "name": "さと",
+      "likes": 20
     },
     {
       "rank": 2,
-      "name": "サンプル 花子",
-      "likes": 198,
-      "postImage": "assets/daily-post-2.jpg"
+      "name": "とも",
+      "likes": 18
     },
     {
       "rank": 3,
-      "name": "サンプル 一郎",
-      "likes": 175,
-      "postImage": "assets/daily-post-3.jpg"
+      "name": "ああ",
+      "likes": 17
     }
   ],
   "2025-10-25": [
