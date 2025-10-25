@@ -663,6 +663,28 @@ body {
   gap: 4px;
 }
 
+/* Simple card without image */
+.daily-post-card-simple {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 120px;
+}
+
+.daily-post-card-simple:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(34, 193, 241, 0.3);
+}
+
 @media (max-width: 768px) {
   .daily-posts-grid {
     grid-template-columns: 1fr;

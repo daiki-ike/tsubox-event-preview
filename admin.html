@@ -73,7 +73,7 @@
         </div>
 
         <h2>📸 昨日のトップ3投稿</h2>
-        <p class="muted">昨日だけのいいね数トップ3を入力します。画像は assets/ フォルダに配置してください。<br>※ 通算ランキングとは別に、1日限定の人気投稿を紹介します。</p>
+        <p class="muted">昨日だけのいいね数トップ3を入力します（投稿者名といいね数のみ）。<br>※ 通算ランキングとは別に、1日限定の人気投稿を紹介します。</p>
 
         <div id="daily-posts-form">
           <!-- JavaScriptで動的に生成 -->
@@ -199,7 +199,7 @@
           const div = document.createElement('div');
           div.className = 'ranking-row';
           div.innerHTML = `
-            <div class="row-3">
+            <div class="row">
               <div>
                 <label for="daily-name-${i}">${i}位 投稿者名</label>
                 <input type="text" id="daily-name-${i}" placeholder="例: 山田太郎" />
@@ -207,10 +207,6 @@
               <div>
                 <label for="daily-likes-${i}">いいね数</label>
                 <input type="number" id="daily-likes-${i}" min="0" placeholder="例: 245" />
-              </div>
-              <div>
-                <label for="daily-image-${i}">画像ファイル名</label>
-                <input type="text" id="daily-image-${i}" placeholder="例: assets/daily-post-${i}.jpg" />
               </div>
             </div>
           `;
@@ -292,14 +288,12 @@
           for (let i = 1; i <= 3; i++) {
             const name = $(`daily-name-${i}`).value.trim();
             const likes = $(`daily-likes-${i}`).value.trim();
-            const image = $(`daily-image-${i}`).value.trim();
 
-            if (name && likes && image) {
+            if (name && likes) {
               dailyPosts.push({
                 rank: i,
                 name: name,
-                likes: parseInt(likes),
-                postImage: image
+                likes: parseInt(likes)
               });
             }
           }
