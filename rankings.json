@@ -70,12 +70,12 @@
     {
       "rank": 4,
       "name": "dd",
-      "prevRank": 4
+      "prevRank": 6
     },
     {
       "rank": 5,
       "name": "ee",
-      "prevRank": 7
+      "prevRank": 5
     },
     {
       "rank": 6,
@@ -90,12 +90,12 @@
     {
       "rank": 8,
       "name": "hh",
-      "prevRank": null
+      "prevRank": 8
     },
     {
       "rank": 9,
       "name": "ii",
-      "prevRank": 7
+      "prevRank": null
     },
     {
       "rank": 10,
