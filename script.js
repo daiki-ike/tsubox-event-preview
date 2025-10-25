@@ -198,8 +198,7 @@
 
     const nowUtc = Date.now();
     const jst = new Date(nowUtc + 9 * 60 * 60 * 1000);
-    const yst = new Date(jst.getTime() - 24 * 60 * 60 * 1000);
-    const key = `${yst.getUTCFullYear()}-${String(yst.getUTCMonth()+1).padStart(2,'0')}-${String(yst.getUTCDate()).padStart(2,'0')}`;
+    const key = `${jst.getUTCFullYear()}-${String(jst.getUTCMonth()+1).padStart(2,'0')}-${String(jst.getUTCDate()).padStart(2,'0')}`;
 
     try {
       const res = await fetch('rankings.json', { cache: 'no-store' });
@@ -296,8 +295,7 @@
 
     const nowUtc = Date.now();
     const jst = new Date(nowUtc + 9 * 60 * 60 * 1000);
-    const yst = new Date(jst.getTime() - 24 * 60 * 60 * 1000);
-    const key = `${yst.getUTCFullYear()}-${String(yst.getUTCMonth()+1).padStart(2,'0')}-${String(yst.getUTCDate()).padStart(2,'0')}`;
+    const key = `${jst.getUTCFullYear()}-${String(jst.getUTCMonth()+1).padStart(2,'0')}-${String(jst.getUTCDate()).padStart(2,'0')}`;
 
     try {
       const res = await fetch('daily-top3.json', { cache: 'no-store' });
