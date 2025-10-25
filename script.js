@@ -14,8 +14,7 @@
   const passedOctEnd = (now.getMonth() + 1 > 10) || ((now.getMonth() + 1 === 10) && now.getDate() > 31);
   const eventYear = passedOctEnd ? currentYear + 1 : currentYear;
   const start = new Date(`${eventYear}-10-15T00:00:00+09:00`);
-  // テスト用: 紙吹雪を確認するため終了時刻を過去に設定
-  const end = new Date(`2025-10-25T12:00:00+09:00`);
+  const end = new Date(`${eventYear}-10-31T23:59:59+09:00`);
 
   const $ = (id) => document.getElementById(id);
   const dd = $("dd"), hh = $("hh"), mm = $("mm"), ss = $("ss");
