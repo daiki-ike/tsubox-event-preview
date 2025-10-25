@@ -18,5 +18,25 @@
       "likes": 175,
       "postImage": "assets/daily-post-3.jpg"
     }
+  ],
+  "2025-10-25": [
+    {
+      "rank": 1,
+      "name": "hh",
+      "likes": 18,
+      "postImage": "assetspost-thumb-1.jpg"
+    },
+    {
+      "rank": 2,
+      "name": "ii",
+      "likes": 17,
+      "postImage": "assetspost-thumb-2.jpg"
+    },
+    {
+      "rank": 3,
+      "name": "jj",
+      "likes": 16,
+      "postImage": "assetspost-thumb-3.jpg"
+    }
   ]
 }
