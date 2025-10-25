@@ -22,21 +22,18 @@
   "2025-10-25": [
     {
       "rank": 1,
-      "name": "hh",
-      "likes": 18,
-      "postImage": "daily-post-1.jpg"
+      "name": "さと",
+      "likes": 20
     },
     {
       "rank": 2,
-      "name": "ii",
-      "likes": 17,
-      "postImage": "daily-post-2.jpg"
+      "name": "とも",
+      "likes": 18
     },
     {
       "rank": 3,
-      "name": "jj",
-      "likes": 16,
-      "postImage": "daily-post-3.jpg"
+      "name": "ああ",
+      "likes": 17
     }
   ]
 }
