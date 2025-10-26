@@ -54,38 +54,13 @@
   "2025-10-25": [
     {
       "rank": 1,
-      "name": "テスト太郎, テスト花子",
-      "prevRank": 13
+      "name": "山田太郎, 佐藤花子",
+      "prevRank": "1,3"
     },
     {
       "rank": 2,
-      "name": "テスト太郎、テスト花子",
+      "name": "田中一郎　鈴木利光",
       "prevRank": 2
-    },
-    {
-      "rank": 3,
-      "name": "テスト太郎,　テスト花子",
-      "prevRank": 3
-    },
-    {
-      "rank": 5,
-      "name": "テスト太郎,　テスト花子",
-      "prevRank": null
-    },
-    {
-      "rank": 6,
-      "name": "テスト太郎,　テスト花子",
-      "prevRank": null
-    },
-    {
-      "rank": 7,
-      "name": "テスト太郎、テスト花子",
-      "prevRank": null
-    },
-    {
-      "rank": 8,
-      "name": "テスト太郎, テスト花子",
-      "prevRank": null
     }
   ]
 }
