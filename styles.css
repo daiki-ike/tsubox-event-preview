@@ -565,6 +565,12 @@ body {
   align-items: center;
 }
 
+.ranking-name-multi .name-with-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .ranking-name-multi .name-part {
   font-size: 1.1rem;
   color: var(--text);
@@ -572,12 +578,12 @@ body {
 }
 
 /* 2名の場合は均等に横並び */
-.ranking-name-multi:has(.name-part:nth-child(2):last-child) {
+.ranking-name-multi:has(.name-with-indicator:nth-child(2):last-child) {
   justify-content: space-around;
 }
 
 /* 3名以上の場合は折り返し */
-.ranking-name-multi:has(.name-part:nth-child(3)) .name-part {
+.ranking-name-multi:has(.name-with-indicator:nth-child(3)) .name-part {
   font-size: 1rem;
 }
 
@@ -621,6 +627,13 @@ body {
   flex-direction: column;
   gap: 4px;
   margin-bottom: 4px;
+}
+
+#top3 .rank-name-multi .name-with-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
 }
 
 #top3 .rank-name-multi .name-part {
