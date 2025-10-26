@@ -178,7 +178,7 @@
               </div>
               <div>
                 <label for="prev-${i}">前日順位</label>
-                <input type="number" id="prev-${i}" min="1" max="20" placeholder="例: 2" />
+                <input type="text" id="prev-${i}" placeholder="例: 2 (複数の場合: 3, 4)" />
               </div>
               <div style="display: flex; align-items: flex-end;">
                 <span id="indicator-${i}" class="preview-indicator"></span>
@@ -262,7 +262,16 @@
             if (!name) continue;
 
             const prevRankValue = $(`prev-${i}`).value.trim();
-            const prevRank = prevRankValue ? parseInt(prevRankValue) : null;
+
+            // カンマ区切りの場合は文字列として保存、単一の場合は数値に変換
+            let prevRank = null;
+            if (prevRankValue) {
+              if (prevRankValue.includes(',') || prevRankValue.includes('、') || prevRankValue.includes('・')) {
+                prevRank = prevRankValue; // 区切り文字がある場合は文字列のまま
+              } else {
+                prevRank = parseInt(prevRankValue); // 単一の場合は数値
+              }
+            }
 
             rankings.push({
               rank: i,
