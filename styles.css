@@ -556,6 +556,31 @@ body {
   color: var(--text);
 }
 
+/* 同一順位対応（複数名横並び表示） */
+.ranking-name-multi {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}
+
+.ranking-name-multi .name-part {
+  font-size: 1.1rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+/* 2名の場合は均等に横並び */
+.ranking-name-multi:has(.name-part:nth-child(2):last-child) {
+  justify-content: space-around;
+}
+
+/* 3名以上の場合は折り返し */
+.ranking-name-multi:has(.name-part:nth-child(3)) .name-part {
+  font-size: 1rem;
+}
+
 .ranking-change {
   font-size: 1.2rem;
   font-weight: 700;
@@ -588,6 +613,20 @@ body {
   display: block;
   font-size: 1rem;
   margin-bottom: 4px;
+}
+
+/* Top3 同一順位対応 */
+#top3 .rank-name-multi {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+#top3 .rank-name-multi .name-part {
+  font-size: 0.95rem;
+  color: #fff;
+  white-space: nowrap;
 }
 
 #top3 .rank-label {

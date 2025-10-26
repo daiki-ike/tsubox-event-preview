@@ -258,8 +258,14 @@
         const body = document.createElement('div');
         body.className = 'prize__body';
 
+        // 名前を区切り文字で分割（, や ・ に対応）
+        const names = (item.name || '').split(/[,、・]/).map(n => n.trim()).filter(n => n);
+        const nameHtml = names.length > 1
+          ? `<div class="rank-name-multi">${names.map(n => `<span class="name-part">${n}</span>`).join('')}</div>`
+          : `<span class="rank-name">${item.name || ''}</span>`;
+
         const p = document.createElement('p');
-        p.innerHTML = `<span class="rank-name">${item.name || ''}</span>${getChangeIndicator(item.rank, item.prevRank)}`;
+        p.innerHTML = `${nameHtml}${getChangeIndicator(item.rank, item.prevRank)}`;
 
         body.appendChild(p);
         card.appendChild(medal);
@@ -273,9 +279,16 @@
         rankings.slice(3, 10).forEach((item) => {
           const rankItem = document.createElement('div');
           rankItem.className = 'ranking-item';
+
+          // 名前を区切り文字で分割（, や ・ に対応）
+          const names = (item.name || '').split(/[,、・]/).map(n => n.trim()).filter(n => n);
+          const nameHtml = names.length > 1
+            ? `<div class="ranking-name-multi">${names.map(n => `<span class="name-part">${n}</span>`).join('')}</div>`
+            : `<div class="ranking-name">${item.name || ''}</div>`;
+
           rankItem.innerHTML = `
             <div class="ranking-number">${item.rank}</div>
-            <div class="ranking-name">${item.name || ''}</div>
+            ${nameHtml}
             ${getChangeIndicator(item.rank, item.prevRank)}
           `;
           rankings410Wrap.appendChild(rankItem);
