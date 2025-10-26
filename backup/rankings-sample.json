@@ -1,0 +1,91 @@
+{
+  "2025-10-24": [
+    {
+      "rank": 1,
+      "name": "aa",
+      "prevRank": 1
+    },
+    {
+      "rank": 2,
+      "name": "bb",
+      "prevRank": 3
+    },
+    {
+      "rank": 3,
+      "name": "cc",
+      "prevRank": 2
+    },
+    {
+      "rank": 4,
+      "name": "dd",
+      "prevRank": 6
+    },
+    {
+      "rank": 5,
+      "name": "ee",
+      "prevRank": 5
+    },
+    {
+      "rank": 6,
+      "name": "ff",
+      "prevRank": 10
+    },
+    {
+      "rank": 7,
+      "name": "gg",
+      "prevRank": 9
+    },
+    {
+      "rank": 8,
+      "name": "hh",
+      "prevRank": 8
+    },
+    {
+      "rank": 9,
+      "name": "ii",
+      "prevRank": null
+    },
+    {
+      "rank": 10,
+      "name": "jj",
+      "prevRank": null
+    }
+  ],
+  "2025-10-25": [
+    {
+      "rank": 1,
+      "name": "テスト太郎, テスト花子",
+      "prevRank": 13
+    },
+    {
+      "rank": 2,
+      "name": "テスト太郎、テスト花子",
+      "prevRank": 2
+    },
+    {
+      "rank": 3,
+      "name": "テスト太郎,　テスト花子",
+      "prevRank": 3
+    },
+    {
+      "rank": 5,
+      "name": "テスト太郎,　テスト花子",
+      "prevRank": null
+    },
+    {
+      "rank": 6,
+      "name": "テスト太郎,　テスト花子",
+      "prevRank": null
+    },
+    {
+      "rank": 7,
+      "name": "テスト太郎、テスト花子",
+      "prevRank": null
+    },
+    {
+      "rank": 8,
+      "name": "テスト太郎, テスト花子",
+      "prevRank": null
+    }
+  ]
+}
